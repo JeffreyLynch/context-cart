@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy Policy — Context Cart</title>
+<meta name="description" content="Context Cart privacy policy: a local-first browser extension with no backend, no accounts, no analytics, no telemetry, and no network requests of its own.">
+<link rel="canonical" href="https://jeffreylynch.github.io/context-cart/privacy.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Privacy Policy — Context Cart">
+<meta property="og:description" content="Context Cart privacy policy: local-first, no backend, no accounts, no analytics, no telemetry, no network requests of its own.">
+<meta property="og:url" content="https://jeffreylynch.github.io/context-cart/privacy.html">
+<meta property="og:site_name" content="Context Cart">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="./"><span class="cart">&#128722;</span> Context Cart</a>
+    <nav class="main">
+      <a href="guides/chatgpt-context-multiple-pages.html">Guide</a>
+      <a href="guides/ai-context-limits.html">Context limits</a>
+      <a href="guides/extension-privacy-checklist.html">Extension privacy</a>
+      <a href="privacy.html">Privacy policy</a>
+      <a href="https://github.com/JeffreyLynch/context-cart">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <article>
+      <h1>Context Cart Privacy Policy</h1>
+      <p class="meta">Last updated: June 11, 2026</p>
+
+      <p>Context Cart is a local-first browser extension. It has no backend service, no accounts, no analytics, no telemetry, and it makes no network requests of its own. This policy explains exactly what data the extension handles, where it lives, and the only ways it ever leaves your browser.</p>
+
+      <h2>What the extension stores, and where</h2>
+
+      <p>Everything Context Cart saves is stored locally in your browser using <code>chrome.storage.local</code>:</p>
+
+      <ul>
+        <li><strong>Snippets</strong> — text you select and capture, plus the page title, page URL, and a timestamp for each snippet.</li>
+        <li><strong>Page links</strong> — URLs and titles of pages or links you add via right-click.</li>
+        <li><strong>Manual notes</strong> you type into the side panel.</li>
+        <li><strong>Carts</strong> — the named groups you organize snippets into.</li>
+        <li><strong>Saved prompts</strong> and your settings.</li>
+      </ul>
+
+      <p>This data never leaves your device unless you take one of the explicit actions listed below. The developer has no access to it. There is no server copy.</p>
+
+      <h2>How data can leave the extension (always user-initiated)</h2>
+
+      <p>Data leaves Context Cart only when you explicitly:</p>
+
+      <ol>
+        <li><strong>Copy</strong> a composed prompt or Markdown export — the text is written to your system clipboard. The extension only writes to the clipboard; it never reads it.</li>
+        <li><strong>Open a draft in ChatGPT</strong> — the composed prompt is sent to chatgpt.com. When the prompt is small enough, this works by opening a ChatGPT URL that contains your prompt as a query parameter (<code>chatgpt.com/?q=...</code>). Note: like any URL you visit, that URL — including the prompt text — appears in your browser history.</li>
+        <li><strong>Send to ChatGPT with autosubmit or "current conversation" mode</strong> (both off by default) — the extension fills the ChatGPT message box on chatgpt.com with your composed prompt and, if autosubmit is on, submits it. This requires an optional permission (see below). The extension never reads ChatGPT's responses or anything else on the page.</li>
+        <li><strong>Send to Claude</strong> — the composed prompt is copied to your clipboard and claude.ai is opened for you to paste, or, if you enable the Claude Desktop option, the prompt is passed to the Claude Desktop app via its documented <code>claude://</code> link (prefill only; you review and send). Context Cart never injects scripts into claude.ai.</li>
+      </ol>
+
+      <p>What you send to ChatGPT or Claude is then governed by those services' own privacy policies: <a href="https://openai.com/policies/privacy-policy">OpenAI Privacy Policy</a> and <a href="https://www.anthropic.com/legal/privacy">Anthropic Privacy Policy</a>.</p>
+
+      <h2>What the extension never does</h2>
+
+      <ul>
+        <li>No analytics, telemetry, or usage tracking of any kind.</li>
+        <li>No network requests initiated by the extension itself.</li>
+        <li>No reading of pages in the background — capture happens only when you right-click and choose a Context Cart menu item, or press the capture shortcut (<code>Alt+Shift+A</code>), and only on the page you're viewing at that moment.</li>
+        <li>No reading of AI chat responses or any other page content beyond your selection.</li>
+        <li>No selling, sharing, or transmitting of user data to the developer or any third party.</li>
+      </ul>
+
+      <h2>Permissions</h2>
+
+      <ul>
+        <li><code>contextMenus</code> — adds the right-click capture actions.</li>
+        <li><code>storage</code> — stores carts, snippets, prompts, and settings locally.</li>
+        <li><code>sidePanel</code> — displays the Context Cart side panel.</li>
+        <li><code>activeTab</code> — grants temporary access to the current tab only when you invoke a capture action, so the selection, page title, and URL can be read.</li>
+        <li><code>scripting</code> — used for exactly two things, both user-initiated: reading your text selection when you press the capture shortcut, and filling the ChatGPT message box when you use the optional send features.</li>
+        <li>Optional <code>https://chatgpt.com/*</code> host access — requested only if you enable autosubmit or current-conversation mode in Settings. Turning both options off removes this permission automatically. Without it, the extension never touches chatgpt.com pages.</li>
+      </ul>
+
+      <h2>Retention and deletion</h2>
+
+      <p>Your data stays on your device until you delete it. Removing snippets or carts in the side panel deletes them from local storage; uninstalling the extension removes all stored data. There is nothing to delete on any server, because nothing is ever uploaded.</p>
+
+      <h2>Trademarks</h2>
+
+      <p>ChatGPT is a trademark of OpenAI. Claude is a trademark of Anthropic, PBC. Context Cart is an independent project not affiliated with, endorsed by, or sponsored by OpenAI or Anthropic.</p>
+
+      <h2>Changes to this policy</h2>
+
+      <p>If a future version of Context Cart changes how data is handled (for example, an optional paid tier requiring a license check), this policy will be updated before that version ships, with the change clearly described and the "Last updated" date revised.</p>
+
+      <h2>Contact</h2>
+
+      <p>Privacy questions: <a href="mailto:jeffreymlynch@gmail.com">jeffreymlynch@gmail.com</a></p>
+    </article>
+  </div>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="links">
+      <a href="./">Home</a>
+      <a href="privacy.html">Privacy policy</a>
+      <a href="guides/chatgpt-context-multiple-pages.html">Multi-page context guide</a>
+      <a href="guides/ai-context-limits.html">Context limits</a>
+      <a href="guides/extension-privacy-checklist.html">Extension privacy checklist</a>
+      <a href="https://github.com/JeffreyLynch/context-cart">GitHub</a>
+    </div>
+    <p class="disclaimer">ChatGPT is a trademark of OpenAI. Claude is a trademark of Anthropic, PBC. Context Cart is an independent project not affiliated with, endorsed by, or sponsored by OpenAI or Anthropic.</p>
+  </div>
+</footer>
+
+</body>
+</html>

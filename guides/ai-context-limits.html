@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Chat Context &amp; Paste Limits — ChatGPT, Claude, Gemini (June 2026)</title>
+<meta name="description" content="Reference table of approximate context windows and practical paste limits for ChatGPT (free/Plus), Claude, Gemini, Perplexity, and Copilot — with verification caveats. Updated June 2026.">
+<link rel="canonical" href="https://jeffreylynch.github.io/context-cart/guides/ai-context-limits.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AI Chat Context &amp; Paste Limits (June 2026)">
+<meta property="og:description" content="Approximate context windows and practical paste limits for ChatGPT, Claude, Gemini, Perplexity, and Copilot — with verification caveats.">
+<meta property="og:url" content="https://jeffreylynch.github.io/context-cart/guides/ai-context-limits.html">
+<meta property="og:site_name" content="Context Cart">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="../"><span class="cart">&#128722;</span> Context Cart</a>
+    <nav class="main">
+      <a href="chatgpt-context-multiple-pages.html">Guide</a>
+      <a href="ai-context-limits.html">Context limits</a>
+      <a href="extension-privacy-checklist.html">Extension privacy</a>
+      <a href="../privacy.html">Privacy policy</a>
+      <a href="https://github.com/JeffreyLynch/context-cart">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <article>
+      <h1>AI Chat Context &amp; Paste Limits</h1>
+      <p class="meta"><strong>Last updated: June 11, 2026.</strong> We review this page periodically; vendors change these limits often and rarely announce it.</p>
+
+      <p>"How much can I paste into ChatGPT?" has two different answers, and most pages online conflate them:</p>
+
+      <ul>
+        <li><strong>The context window</strong> — the model's total working memory in tokens, shared by the system prompt, your whole conversation, any pasted text or files, and the response being generated.</li>
+        <li><strong>Practical paste limits</strong> — softer, mostly undocumented constraints on a single message: input-box character caps, browser performance with huge pastes, URL length limits for prefilled prompts, and the point where model attention quality starts to drop even though the text technically fits.</li>
+      </ul>
+
+      <p>The table below gives conservative, deliberately approximate figures for both. <strong>Treat every number as "order of magnitude, verify in-product"</strong> — vendors adjust limits by plan, model, region, and load, sometimes week to week.</p>
+
+      <h2>The reference table</h2>
+
+      <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th>Product / plan</th>
+            <th>Approx. context window</th>
+            <th>Practical single-paste guidance</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>ChatGPT — Free</strong></td>
+            <td>On the order of tens of thousands of tokens (smaller than paid tiers)</td>
+            <td>A few thousand words per message is reliable; very large pastes may be truncated or rejected</td>
+            <td>Free tier historically gets the smallest window and may switch to a lighter model under load.</td>
+          </tr>
+          <tr>
+            <td><strong>ChatGPT — Plus / paid</strong></td>
+            <td>Roughly 100K&ndash;200K tokens depending on the model selected</td>
+            <td>Tens of thousands of words can fit, but quality of attention drops well before the hard cap; file upload is more reliable past ~10K words</td>
+            <td>Window varies by model picker choice. Long conversations consume the same budget as pastes.</td>
+          </tr>
+          <tr>
+            <td><strong>ChatGPT — URL prefill</strong> (<code>chatgpt.com/?q=...</code>)</td>
+            <td>n/a</td>
+            <td><strong>A few thousand characters</strong> — browser and server URL-length limits apply, not model limits</td>
+            <td>Useful for small prompts only. Anything bundled into a URL also lands in browser history.</td>
+          </tr>
+          <tr>
+            <td><strong>Claude (claude.ai)</strong></td>
+            <td>Roughly 200K tokens on standard plans; larger windows have been offered on some plans/models</td>
+            <td>Very large pastes are generally accepted; extremely large ones are better attached as files</td>
+            <td>Long-context handling is a Claude strength, but per-plan usage limits still apply.</td>
+          </tr>
+          <tr>
+            <td><strong>Gemini (gemini.google.com)</strong></td>
+            <td>Among the largest consumer windows — hundreds of thousands of tokens, with million-token windows marketed on some paid tiers</td>
+            <td>Huge pastes usually accepted; the input box may lag in the browser before the model objects</td>
+            <td>Marketed maximums often refer to API/paid tiers, not the free consumer app.</td>
+          </tr>
+          <tr>
+            <td><strong>Perplexity</strong></td>
+            <td>Varies with the underlying model selected (it routes to third-party and in-house models)</td>
+            <td>A few thousand words per message is the safe assumption; use file upload for more</td>
+            <td>Optimized for search-style queries; very long pasted context is not its primary use case.</td>
+          </tr>
+          <tr>
+            <td><strong>Microsoft Copilot</strong></td>
+            <td>Varies by surface (web, Windows, Microsoft 365) and plan</td>
+            <td>The chat input has historically enforced visible character caps — assume <strong>a few thousand characters</strong> unless you verify otherwise</td>
+            <td>The most input-box-constrained of the major products. M365 Copilot limits differ from consumer Copilot.</td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+
+      <div class="note"><strong>How to verify in-product (two minutes):</strong> paste a long, numbered list (1&ndash;500, one item per line) into the chat and ask "what is the last numbered item you can see?" If the model answers with a number smaller than 500, you've found the effective truncation point for that product, plan, and day. Repeat occasionally — limits drift.</div>
+
+      <h2>Rules of thumb for converting words to tokens</h2>
+
+      <ul>
+        <li><strong>1 token &asymp; 4 characters</strong> of typical English, or about &frac34; of a word.</li>
+        <li>1,000 words &asymp; 1,300&ndash;1,500 tokens.</li>
+        <li>A full web page (article body only) is commonly 1,000&ndash;3,000 words &asymp; 1,500&ndash;4,500 tokens.</li>
+        <li>Code, URLs, and non-English text tokenize less efficiently — budget extra.</li>
+      </ul>
+
+      <h2>Why you should stay well under the maximum</h2>
+
+      <p>Hard limits are not the real ceiling. Three things degrade before you hit them:</p>
+
+      <ol>
+        <li><strong>Attention quality.</strong> Models attend most reliably to the beginning and end of long inputs; material buried in the middle of a near-capacity prompt is more likely to be glossed over.</li>
+        <li><strong>Conversation history.</strong> The window is shared. A long chat plus a big paste can silently push your earliest messages out of memory or into lossy summarization.</li>
+        <li><strong>Response room.</strong> The model's answer comes out of the same budget. Fill the window completely and you get a cramped reply.</li>
+      </ol>
+
+      <p>A good working rule: keep deliberate pastes to a comfortable fraction of the window, send <em>curated excerpts</em> rather than whole pages, and label each source. Our guide to <a href="chatgpt-context-multiple-pages.html">giving ChatGPT context from multiple pages</a> covers the formatting that makes multi-source prompts work.</p>
+
+      <h2>Caveats</h2>
+
+      <ul>
+        <li>All figures above are <strong>approximations as of June 11, 2026</strong>, based on vendor documentation and observed behavior. They change without notice.</li>
+        <li>Plan, model selection, region, and server load all affect effective limits.</li>
+        <li>API limits are different from (and usually better documented than) consumer chat limits; this page covers the consumer chat products only.</li>
+        <li>When a number matters for your work, run the verification test above rather than trusting any third-party table — including this one.</li>
+      </ul>
+
+      <p style="margin-top: 40px;"><em>This page is maintained by the team behind <a href="../">Context Cart</a>, a free local-first extension that collects snippets from multiple pages into source-labeled bundles sized for these limits.</em></p>
+
+    </article>
+  </div>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="links">
+      <a href="../">Home</a>
+      <a href="../privacy.html">Privacy policy</a>
+      <a href="chatgpt-context-multiple-pages.html">Multi-page context guide</a>
+      <a href="ai-context-limits.html">Context limits</a>
+      <a href="extension-privacy-checklist.html">Extension privacy checklist</a>
+      <a href="https://github.com/JeffreyLynch/context-cart">GitHub</a>
+    </div>
+    <p class="disclaimer">ChatGPT is a trademark of OpenAI. Claude is a trademark of Anthropic, PBC. Context Cart is an independent project not affiliated with, endorsed by, or sponsored by OpenAI or Anthropic.</p>
+  </div>
+</footer>
+
+</body>
+</html>

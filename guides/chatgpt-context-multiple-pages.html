@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How to Give ChatGPT Context from Multiple Pages (2026 Guide)</title>
+<meta name="description" content="Practical techniques for feeding ChatGPT context from many web pages: copy-paste discipline, one message per source, Markdown headers, token-limit awareness, and when to automate.">
+<link rel="canonical" href="https://jeffreylynch.github.io/context-cart/guides/chatgpt-context-multiple-pages.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="How to Give ChatGPT Context from Multiple Pages">
+<meta property="og:description" content="Practical techniques for feeding ChatGPT context from many web pages: copy-paste discipline, one message per source, Markdown headers, and token-limit awareness.">
+<meta property="og:url" content="https://jeffreylynch.github.io/context-cart/guides/chatgpt-context-multiple-pages.html">
+<meta property="og:site_name" content="Context Cart">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="../"><span class="cart">&#128722;</span> Context Cart</a>
+    <nav class="main">
+      <a href="chatgpt-context-multiple-pages.html">Guide</a>
+      <a href="ai-context-limits.html">Context limits</a>
+      <a href="extension-privacy-checklist.html">Extension privacy</a>
+      <a href="../privacy.html">Privacy policy</a>
+      <a href="https://github.com/JeffreyLynch/context-cart">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <article>
+      <h1>How to Give ChatGPT Context from Multiple Pages</h1>
+      <p class="meta">Last updated: June 11, 2026 &middot; ~7 minute read</p>
+
+      <p>ChatGPT is remarkably good at synthesizing information — comparing sources, spotting contradictions, summarizing a body of research — but only if you actually get that information in front of it. And that's where most people hit a wall. Real research rarely lives on one page. You're comparing four product reviews, reading six papers, or pulling specs from a dozen documentation pages, and ChatGPT can only see what you give it.</p>
+
+      <p>This guide covers the techniques that actually work for feeding ChatGPT context from multiple web pages, the failure modes of each, and how to structure multi-source prompts so the model can reason across them instead of mushing everything together.</p>
+
+      <h2>Why "just paste it all in" usually fails</h2>
+
+      <p>The naive approach — open ten tabs, copy everything, paste one giant blob — fails for three predictable reasons:</p>
+
+      <ol>
+        <li><strong>The model loses track of source boundaries.</strong> When text from page A flows straight into text from page B with no separator, ChatGPT treats it as one document. Ask it "which source said X?" and it will guess, often confidently and wrongly.</li>
+        <li><strong>You lose track of source boundaries.</strong> Two days later, you can't reconstruct where a claim came from either. If the output matters — a purchase decision, a report, a citation — that's a real problem.</li>
+        <li><strong>You blow through practical paste limits.</strong> Every chat product has both a hard context window and softer, less documented limits on how much a single message can comfortably hold. (See our companion reference, <a href="ai-context-limits.html">AI chat context &amp; paste limits</a>.) Past those limits, content gets truncated, or the model attends poorly to the middle of very long inputs — the well-documented "lost in the middle" effect.</li>
+      </ol>
+
+      <p>The fix isn't a tool, at least not at first. It's discipline. Here are the manual methods, from simplest to most robust.</p>
+
+      <h2>Method 1: Copy-paste discipline</h2>
+
+      <p>The cheapest improvement is to stop copying whole pages. Most of any web page is navigation, ads, comments, and boilerplate that wastes context and dilutes the signal. Instead:</p>
+
+      <ul>
+        <li><strong>Select only the passage you actually need</strong> — the paragraph with the spec, the table with the numbers, the section with the argument. A focused 300-word excerpt usually beats a 5,000-word page dump.</li>
+        <li><strong>Capture the URL and title alongside every excerpt.</strong> Paste them on the line above the snippet. This takes five extra seconds and is the difference between "a pile of text" and "a set of sources."</li>
+        <li><strong>Use a staging area.</strong> Don't paste directly into ChatGPT as you browse. Collect into a scratch document first (a text file, a note, anywhere), then compose one deliberate message. This keeps you from sending half-formed context and lets you prune before submitting.</li>
+      </ul>
+
+      <p>Even this minimal discipline dramatically improves answer quality, because you're curating instead of dumping.</p>
+
+      <h2>Method 2: One message per source</h2>
+
+      <p>When sources are long, or you want ChatGPT to acknowledge each one, feed them in sequentially:</p>
+
+      <blockquote>"I'm going to give you 4 sources, one per message. Just reply 'got it' to each. After the last one I'll ask my question."</blockquote>
+
+      <p>Then send each source as its own message, labeled (<em>"Source 2 of 4 — [title] — [URL]:"</em>), and ask your real question at the end.</p>
+
+      <p><strong>Why it works:</strong> each source gets a clean boundary, and you can verify nothing got truncated before moving on. It also keeps each individual message well under any per-message limit.</p>
+
+      <p><strong>Where it breaks:</strong> it's slow, and everything still has to fit in the conversation's total context window. In long conversations, some products begin summarizing or dropping earlier turns, so material you pasted an hour ago may quietly degrade. If the model's answers start ignoring your first sources, that's the symptom. Front-load the most important source <em>last</em> or restate key facts in your final question.</p>
+
+      <h2>Method 3: Markdown headers per source (the gold standard)</h2>
+
+      <p>The most reliable manual format is a single, structured message that uses Markdown headers to delimit sources. Language models are heavily trained on Markdown, and headers act as strong structural signals:</p>
+
+<blockquote style="white-space: pre-line; font-family: ui-monospace, Consolas, monospace; font-size: 0.85rem;">I'm researching [topic]. Below are excerpts from 4 sources. Cite sources by number when you answer.
+
+## Source 1: Page Title Here
+URL: https://example.com/page-one
+Accessed: 2026-06-11
+
+[excerpt...]
+
+## Source 2: Another Page
+URL: https://example.com/page-two
+
+[excerpt...]
+
+---
+
+My question: [the actual task]</blockquote>
+
+      <p>A few details that matter more than they look:</p>
+
+      <ul>
+        <li><strong>Number the sources.</strong> "Source 3 says..." is a much easier handle for the model (and for you) than restating titles.</li>
+        <li><strong>Put your question at the end, after all sources.</strong> Models weight the end of a prompt heavily; a question buried at the top before 6,000 words of excerpts gets worse answers.</li>
+        <li><strong>Tell it to cite by source number.</strong> This forces the model to ground claims in the material you provided rather than its training data, and makes hallucinated attributions easy to spot.</li>
+        <li><strong>Include dates when content is time-sensitive.</strong> "Accessed 2026-06-11" prevents the model from silently mixing your fresh excerpt with stale memorized information.</li>
+      </ul>
+
+      <h2>Method 4: Respect the token budget</h2>
+
+      <p>A rough but workable rule: <strong>one token &asymp; 4 characters of English text</strong>, so 1,000 words is roughly 1,300&ndash;1,500 tokens. Context windows sound enormous until you remember they include the system prompt, the whole conversation history, and the model's response. Practical guidance:</p>
+
+      <ul>
+        <li>Budget your pasted material to a comfortable fraction of the window — not the theoretical maximum. Quality of attention degrades before the hard limit is reached.</li>
+        <li><strong>Summarize the low-priority sources yourself.</strong> Two sentences of your own summary, labeled as such ("Source 5, my summary: ..."), often beats 2,000 words of raw text the model will skim anyway.</li>
+        <li><strong>Split very large jobs into stages.</strong> Ask for a structured summary of sources 1&ndash;4 in one conversation, then carry that summary (not the raw text) into the next stage. You become the compression layer.</li>
+        <li>If the chat starts forgetting early material, start fresh and re-paste a condensed bundle rather than fighting a degraded conversation.</li>
+      </ul>
+
+      <h2>Common mistakes to avoid</h2>
+
+      <ul>
+        <li><strong>Pasting URLs alone and assuming ChatGPT read them.</strong> Depending on plan and settings, browsing may be unavailable, may fail silently on paywalled or script-heavy pages, or may fetch something different from what you saw. If the exact text matters, paste the text.</li>
+        <li><strong>Mixing your own opinions into source excerpts without labels.</strong> The model can't tell your commentary from the quoted material unless you mark it.</li>
+        <li><strong>Re-pasting everything on every follow-up.</strong> Within one conversation the context persists; restating wastes the budget you're trying to protect.</li>
+        <li><strong>Trusting attribution without checking.</strong> Even with numbered sources, verify any quote the model attributes before you rely on it. Grounded prompts reduce hallucination; nothing eliminates it.</li>
+      </ul>
+
+      <h2>The workflow problem underneath all of this</h2>
+
+      <p>Notice that every method above has the same hidden cost: you are the database. You're maintaining a scratch file, copying URLs by hand, formatting headers, and reassembling everything at the end — and the moment your research stretches across an afternoon or several days, that scaffolding starts to collapse. Tabs close. The scratch file ends up with unlabeled fragments. You paste the bundle and realize you lost the URL for the one source that mattered.</p>
+
+      <p>The techniques still work. They just don't scale gracefully past four or five sources, and real research regularly does.</p>
+
+      <hr>
+
+      <p><strong>If you'd rather automate the bookkeeping:</strong> this site exists because we built <a href="../">Context Cart</a>, a free, local-first browser extension that does exactly the workflow described above. You highlight text on any page (or right-click, or press <code>Alt+Shift+A</code>) and snippets accumulate into a named cart — each one automatically tagged with its page title, URL, and timestamp. When you're done collecting, it composes a single structured prompt with per-source headers, shows you a preview, and sends it to ChatGPT in one shot (or copies it for Claude, or exports Markdown). Everything stays in your browser: no account, no server, no analytics. The manual methods on this page are genuinely worth learning either way — they're the same structure Context Cart produces for you.</p>
+
+    </article>
+  </div>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="links">
+      <a href="../">Home</a>
+      <a href="../privacy.html">Privacy policy</a>
+      <a href="chatgpt-context-multiple-pages.html">Multi-page context guide</a>
+      <a href="ai-context-limits.html">Context limits</a>
+      <a href="extension-privacy-checklist.html">Extension privacy checklist</a>
+      <a href="https://github.com/JeffreyLynch/context-cart">GitHub</a>
+    </div>
+    <p class="disclaimer">ChatGPT is a trademark of OpenAI. Claude is a trademark of Anthropic, PBC. Context Cart is an independent project not affiliated with, endorsed by, or sponsored by OpenAI or Anthropic.</p>
+  </div>
+</footer>
+
+</body>
+</html>
